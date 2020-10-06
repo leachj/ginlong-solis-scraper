@@ -39,6 +39,7 @@ There is a possibility it also works with the following inverters: Omnik Solar, 
 | MQTT_SERVER               | No       | MQTT server                                                                                          | `localhost`     |
 | MQTT_USERNAME             | No       | MQTT username                                                                                        | *empty*         |
 | MQTT_PASSWORD             | No       | MQTT password                                                                                        | *empty*         |
+| TZ                        | No       | TimeZone e.g Australia/Sydney                                                                        | *empty*         |
 
 Note that if you have more than 1 device - then it is not readily apparent where to get the Device ID
 In that case - setup the script, and set LOG_LEVEL to DEBUG, then view the logs and search for deviceId - 
