@@ -39,6 +39,10 @@ ENV MQTT_SERVER="localhost"
 ENV MQTT_USERNAME=""
 ENV MQTT_PASSWORD=""
 
+ENV TZ=""
+
+RUN apk add -U tzdata
+
 WORKDIR /usr/src/app
 
 COPY requirements.txt ./
