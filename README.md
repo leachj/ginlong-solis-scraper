@@ -2,6 +2,14 @@
 
 Dockerized version of [ginlong-scraper](https://github.com/dkruyt/ginlong-scraper)
 
+For Docker newbies i would suggest running this with Portainer https://www.portainer.io/installation/
+
+You can also move the environment variables into an ENV file and invoke that on the commandline when 
+invoking the docker image.
+
+In the case of two inverters (see note below) once you have the deviceid you can set up two seperate docker containers
+and just vary the deviceId in the environment variables.
+
 Scrapes PV statistics from the Ginlong monitor pages and outputs it to influxdb, pvoutput or mqtt.
 
 There is a possibility it also works with the following inverters: Omnik Solar, Solarman and Trannergy Inverters
@@ -31,6 +39,12 @@ There is a possibility it also works with the following inverters: Omnik Solar, 
 | MQTT_SERVER               | No       | MQTT server                                                                                          | `localhost`     |
 | MQTT_USERNAME             | No       | MQTT username                                                                                        | *empty*         |
 | MQTT_PASSWORD             | No       | MQTT password                                                                                        | *empty*         |
+
+Note that if you have more than 1 device - then it is not readily apparent where to get the Device ID
+In that case - setup the script, and set LOG_LEVEL to DEBUG, then view the logs and search for deviceId - 
+this will list the IDs of each inverter.
+
+
 
 ## Bonus
 
