@@ -214,8 +214,8 @@ def do_work():
                     "v5": float(Inverter_Temperature),
                     "v6": float(AC_Voltage)
             }
-
-            encoded = urllib.urlencode(pvoutputdata)
+#Python3 change
+            encoded = urllib.parse.urlencode(pvoutputdata)
 
             pvoutput_result = requests.post("http://pvoutput.org/service/r2/addstatus.jsp", data=encoded, headers=headers)
             logging.debug('PvOutput response: %s' % pvoutput_result.content)
