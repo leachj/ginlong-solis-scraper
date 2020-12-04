@@ -1,4 +1,4 @@
-request
+requests
 schedule
 paho-mqtt
 influxdb

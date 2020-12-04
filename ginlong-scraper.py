@@ -129,7 +129,15 @@ def do_work():
         Annual_Generation = resultJson['result']['deviceWapper']['dataJSON'].get('1bf')
         Total_Generation = resultJson['result']['deviceWapper']['dataJSON'].get('1bc')
         Generation_Last_Month = resultJson['result']['deviceWapper']['dataJSON'].get('1ru')
-
+        Power_Grid_Total_Power = resultJson['result']['deviceWapper']['dataJSON'].get('1bq')
+        Total_On_grid_Generation = resultJson['result']['deviceWapper']['dataJSON'].get('1bu')
+        Total_Energy_Purchased = resultJson['result']['deviceWapper']['dataJSON'].get('1bv')
+        Consumption_Power = resultJson['result']['deviceWapper']['dataJSON'].get('1cj')
+        Consumption_Energy = resultJson['result']['deviceWapper']['dataJSON'].get('1cn')
+        Daily_Energy_Used = resultJson['result']['deviceWapper']['dataJSON'].get('1co')
+        Monthly_Energy_Used = resultJson['result']['deviceWapper']['dataJSON'].get('1cp')
+        Annual_Energy_Used = resultJson['result']['deviceWapper']['dataJSON'].get('1cq')
+        Battery_Charge_Percent = resultJson['result']['deviceWapper']['dataJSON'].get('1cv')
         niceTimestamp = time.ctime((updateDate) / 1000)
 
         # Print collected values
@@ -151,6 +159,16 @@ def do_work():
         logging.debug('Annual_Generation: %s' % str(Annual_Generation))
         logging.debug('Total_Generation: %s' % str(Total_Generation))
         logging.debug('Generation_Last_Month: %s' % str(Generation_Last_Month))
+        logging.debug('Power_Grid_Total_Power: %s' % str(Power_Grid_Total_Power))
+        logging.debug('Total_On_grid_Generation: %s' % str(Total_On_grid_Generation))
+        logging.debug('Total_Energy_Purchased: %s' % str(Total_Energy_Purchased))
+        logging.debug('Consumption_Power: %s' % str(Consumption_Power))
+        logging.debug('Consumption_Energy: %s' % str(Consumption_Power)) 
+        logging.debug('Daily_Energy_Used: %s' % str(Daily_Energy_Used))
+        logging.debug('Monthly_Energy_Used: %s' % str(Monthly_Energy_Used))
+        logging.debug('Annual_Energy_Used: %s' % str(Annual_Energy_Used))
+        logging.debug('Battery_Charge_Percent: %s' % str(Battery_Charge_Percent))
+
 
         # Write to Influxdb
         if influx.lower() == "true":
@@ -179,6 +197,14 @@ def do_work():
                         "updateDate": int(updateDate),
                         "Total_Generation": float(Total_Generation),
                         "Generation_Last_Month": float(Generation_Last_Month),
+			"Power_Grid_Total_Power": float(Power_Grid_Total_Power),
+			"Total_On_grid_Generation": float(Total_On_grid_Generation),
+			"Total_Energy_Purchased": float(Total_Energy_Purchased),
+			"Consumption_Power": float(Consumption_Power),
+			"Consumption_Energy": float(Consumption_Energy),
+			"Daily_Energy_Used": float(Daily_Energy_Used), 
+			"Monthly_Energy_Used": float(Monthly_Energy_Used), 
+			"Annual_Energy_Used": float(Annual_Energy_Used),
                     }
                 }
             ]
@@ -211,6 +237,8 @@ def do_work():
                     "t": hour,
                     "v1": float(Daily_Generation) * 1000,
                     "v2": float(AC_Power),
+                    "v3": float(Daily_Energy_Used) * 1000,
+                    "v4": float(Consumption_Power),
                     "v5": float(Inverter_Temperature),
                     "v6": float(AC_Voltage)
             }
@@ -251,7 +279,16 @@ def do_work():
             msgs.append((mqtt_topic + "updateDate", int(updateDate), 0, False))
             msgs.append((mqtt_topic + "Total_Generation", float(Total_Generation), 0, False))
             msgs.append((mqtt_topic + "Generation_Last_Month", float(Generation_Last_Month), 0, False))
-
+            msgs.append((mqtt_topic + "Power_Grid_Total_Power", float(Power_Grid_Total_Power), 0, False))
+            msgs.append((mqtt_topic + "Total_On_grid_Generation", float(Total_On_grid_Generation), 0, False))
+            msgs.append((mqtt_topic + "Total_Energy_Purchased", float(Total_Energy_Purchased), 0, False))
+            msgs.append((mqtt_topic + "Consumption_Power", float(Consumption_Power), 0, False))
+            msgs.append((mqtt_topic + "Consumption_Energy", float(Consumption_Energy), 0, False))
+            msgs.append((mqtt_topic + "Daily_Energy_Used", float(Daily_Energy_Used), 0, False))
+            msgs.append((mqtt_topic + "Monthly_Energy_Used", float(Monthly_Energy_Used), 0, False))
+            msgs.append((mqtt_topic + "Annual_Energy_Used", float(Annual_Energy_Used), 0, False))
+            msgs.append((mqtt_topic + "Battery_Charge_Percent", float(Battery_Charge_Percent), 0, False))
+            
             publish.multiple(msgs, hostname=mqtt_server, auth=auth_settings)
 
 
